@@ -54,16 +54,17 @@ Along with a MySQL server to hold the flash cards and categories.
 
 ### Getting Started
 
-*composer install* 
+`composer install`
 
-*cp .env.example .env*
+`cp .env.example .env`
 
-*./artisan key:generate*
+`./artisan key:generate`
 
 Edit the newly created .env file and add the database configuration values relevant to your environment.
 
-*./artisan migrate:seed*
-*./artisan db:seed*
+`./artisan migrate`
+`./artisan migrate:seed`
+`./artisan db:seed`
 
 ### Test User Account
 
