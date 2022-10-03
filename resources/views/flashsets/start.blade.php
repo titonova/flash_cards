@@ -7,6 +7,7 @@
             <div class="dark-card">
                 <div class="card-header">Quiz Options</div>
 
+                {{-- {{ dd(cache('prevCardCat'), cache('prevCardLevel')) }} --}}
                 <div class="card-body">
                     @include('alerts.status')
 
@@ -19,7 +20,7 @@
                                 <span class="red-text">*</span>
                                 <br />
                                 <?php $quizOptions = [ '' => 'Random Mix' ] + $cardCats->pluck('name', 'id')->toArray(); ?>
-                                {!! Form::select( 'category', $quizOptions , null, ['class' => 'form-control form-control-lg', 'dusk' => 'card_category'] ) !!}
+                                {!! Form::select( 'category', $quizOptions ,  cache('prevCardCat'), ['class' => 'form-control form-control-lg', 'dusk' => 'card_category']) !!}
                             </div>
 
                             <!-- Number of cards -->
@@ -28,7 +29,7 @@
                                 <span class="red-text">*</span>
                                 <br />
 
-                                {!! Form::select( 'difficulty', $difficultyLvl, null, ['class' => 'form-control form-control-lg', 'dusk' => 'card_difficulty', 'required'] ) !!}
+                                {!! Form::select( 'difficulty', $difficultyLvl,  cache('prevCardLevel'), ['class' => 'form-control form-control-lg', 'dusk' => 'card_difficulty', 'required',  'value'=> cache('prevCardLevel')] ) !!}
                             </div>
 
                             <!-- Number of cards -->
@@ -42,9 +43,9 @@
 
                             <div class="text-center">
                                 {!! Form::submit('Continue', ['class' => 'btn btn-outline', 'dusk' => 'continue_button']) !!}
-                            </div>                      
+                            </div>
                         {!! Form::close() !!}
-                    @else 
+                    @else
                         <p>Some topics and cards need to be added to the system before you can proceed.</p>
                     @endif
                 </div>

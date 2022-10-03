@@ -26,7 +26,7 @@ class FlashSetController extends Controller
             'flashsets.start',
             [
                 'cardCats' => $cardCats ?? array(),
-                'cardNumber' => [ 10 => 10, 20 => 20, 50 => 50 ],
+                'cardNumber' => [ 0 => 'All', 10 => 10, 20 => 20, 50 => 50 ],
                 'difficultyLvl' => [ 0 => 'All', 1, 2, 3, 4, 5 ]
             ]
         );
@@ -39,13 +39,22 @@ class FlashSetController extends Controller
     *
     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
     **/
-    public function showCards(CardStartSetForm $formObj)
+    public function showCards(Request $request, CardStartSetForm $formObj)
     {
         $cardCat = $formObj->get('category');
         $cardLevel = $formObj->get('difficulty');
 
-        $cardQuery = Cards::inRandomOrder()->limit($formObj->get('card_number'));
+        cache()->put('prevCardCat', $cardCat);
+        cache()->put('prevCardLevel', $cardLevel);
 
+        //dd(cache()->get('prevCardCat'), cache()->get('prevCardLevel'));
+
+        if($cardLevel === '0'){
+            $cardQuery = Cards::inRandomOrder();
+        }
+        else{
+            $cardQuery = Cards::inRandomOrder()->limit($formObj->get('card_number'));
+        }
         if ($cardLevel > 0) {
             $cardQuery->where('difficulty', $cardLevel);
         }
@@ -54,12 +63,15 @@ class FlashSetController extends Controller
             $cardQuery->where('category', $cardCat);
         }
 
+
         $cardSet = $cardQuery->get();
 
         return view(
             'flashsets.show_cards',
             [
-                'existingCards' => count($cardSet) > 2 ? $cardSet : Cards::inRandomOrder()->limit($formObj->get('card_number'))->get()
+                //'existingCards' => count($cardSet) > 2 ? $cardSet : Cards::inRandomOrder()->limit($formObj->get('card_number'))->get()
+                'existingCards' => $cardSet,
+                'page_id' => $request->page_id
             ]
         );
     }

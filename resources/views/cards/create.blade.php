@@ -1,5 +1,32 @@
 @extends('layouts.app')
 
+
+@push('scripts')
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+    <script src="/js/dist/highlight-js/blade.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
+
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded',function () {
+            const easyMDE = new EasyMDE({element: document.getElementById('solution-textarea'),
+                                toolbar: ["bold", "italic", "heading", "|", "quote","code","preview","side-by-side","fullscreen","guide"],
+                                renderingConfig:{
+                                    codeSyntaxHighlighting: true,
+
+                                },
+
+                            });
+
+           });
+
+
+    </script>
+@endpush
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -46,7 +73,8 @@
                         <div class="form-group">
                             {!! Form::label('solution', 'Solution') !!}
                             <span class="red-text">*</span>
-                             {!! Form::textarea('solution', $cardRow->solution ?? null, ['dusk' => 'card_solution','class' => 'form-control texteditor', 'placeholder' => 'Back of Card ( Max 1000 Characters )', 'maxlength' => 1000]) !!}
+                             {!! Form::textarea('solution', $cardRow->solution ?? null, ['dusk' => 'card_solution','class' => 'form-control ', 'placeholder' => 'Back of Card ( Max 1000 Characters )', 'maxlength' => 1000,'id'=>'solution-textarea']) !!}
+                            <div class="solution-preview-render"></div>
                         </div>
 
                         <!-- Tags related to the card -->

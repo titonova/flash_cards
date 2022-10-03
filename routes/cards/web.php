@@ -3,6 +3,7 @@
 Route::get('/', 'FlashSetController@beginSet')->name('card.select');
 
 Route::post('/', 'FlashSetController@showCards')->name('card.begin');
+Route::get('/show-cards', 'FlashSetController@showCards')->name('card.show');
 /** End the flash card selection and view related routes **/
 
 /** Start the flash card management related routes **/

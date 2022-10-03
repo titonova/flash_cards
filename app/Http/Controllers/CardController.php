@@ -92,9 +92,9 @@ class CardController extends Controller
         ( new Tags )->saveCardTags( $cardId, $formObj->get('tags') );
 
         if (is_numeric($cardId)) {
-            return redirect()->route('dashboard')->with('status', 'Flash card saved successfully.');
+            return redirect()->back()->with('status', 'Flash card saved successfully.');
         } else {
-            return redirect()->route('card.create')->with('error', 'Error saving the flash card.')->withInput();
+            return redirect()->back()->with('error', 'Error saving the flash card.')->withInput();
         }
     }
 

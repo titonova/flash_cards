@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    showCardFromHash()
   var annotate = RoughNotation.annotate;
   let annotation = null;
 
@@ -74,34 +74,43 @@ $(document).ready(function(){
 
       let currentSide = ($('.current').hasClass('flip') ? "Answer" : "Question");
 
-      $('#current-side').html( currentSide );      
+      $('#current-side').html( currentSide );
     });
+
+
+
   }
 
+  function showCardFromHash(){
+    let card_id = location.hash
+
+    alert(card_id)
+
+  }
   function showTextEffect() {
 
-    setTimeout(function() { 
+    setTimeout(function() {
       if ($(".current u").length) {
         annotation = annotate(document.querySelector(".current u"), { type: 'underline', color: 'red' })
-      } 
+      }
 
       if ($(".current .side_two b").length) {
         annotation = annotate(document.querySelector(".current b"), { type: 'highlight', color: '#FFD54F' })
-      }       
+      }
 
-      annotation.show();  
+      annotation.show();
     }, 1300);
-  }  
-  
+  }
+
   $("#save-feedback").on('click', function( event ) {
     event.preventDefault();
 
     $.post(
-      "/api/store/feedback", 
+      "/api/store/feedback",
       {
         'card_id' : $(".current").data("card-id"),
-        'feedback' : $("#card-feedback textarea[name=feedback]").val(), 
-        '_token' : $("#card-feedback input[name=_token]").val(),       
+        'feedback' : $("#card-feedback textarea[name=feedback]").val(),
+        '_token' : $("#card-feedback input[name=_token]").val(),
       },
       function(result){
         $("#card-feedback").trigger('reset');

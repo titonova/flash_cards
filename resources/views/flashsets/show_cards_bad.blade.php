@@ -1,23 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
+
 	<div class="container dark-container">
 	    <div class="row justify-content-center">
 	        <div class="col-md-12">
 	        	@if (count($existingCards) > 1)
 	        		<?php $cardCount=1; ?>
 					<ul id="deck">
-						@foreach( $existingCards as $existingCard )
-							<li class="flash-card" data-card-number="{!! $cardCount++ !!}" data-card-id="{!! $existingCard->id !!}">
+
+
+							<li class="flash-card" data-card-number="{!! $cardCount++ !!}" data-card-id="{!! $currentCard->id !!}">
 								<div class="side_one">
-									<div class="flash-card-content"><x-markdown>{!! $existingCard->problem !!}</x-markdown></div>
+									<div class="flash-card-content"><x-markdown>{!! $currentCard->problem !!}</x-markdown></div>
 								</div>
 
 								<div class="side_two">
-									<div class="flash-card-content"><x-markdown>{!! $existingCard->solution !!}</x-markdown></div>
+									<div class="flash-card-content"><x-markdown>{!! $currentCard->solution !!}</x-markdown></div>
 								</div>
 							</li>
-						@endforeach
+
 					</ul>
 			</div>
 
