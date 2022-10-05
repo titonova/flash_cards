@@ -34,4 +34,29 @@ class Cards extends Model
 
         return $catCards;
     }
+
+    /**
+     *
+     * Get an escaped html solution
+     *
+     * @return void
+     */
+    public function getHtmlEscapedSolution()
+    {
+        // Replace all text within <pre><code></code></pre> with escaped HTML
+        $escapedSolution = preg_replace_callback(
+            '/<pre><code>(.*?)<\/code><\/pre>/s',
+            function ($matches) {
+                return '<pre><code>'.htmlspecialchars($matches[1]).'</code></pre>';
+            },
+            $this->solution
+        );
+
+        // Remove the new lines after <pre><code>
+        $escapedSolution = str_replace("<pre><code>\n", "<pre><code>",$escapedSolution);
+
+
+        return trim($escapedSolution);
+    }
+
 }

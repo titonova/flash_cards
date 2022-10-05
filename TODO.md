@@ -8,6 +8,7 @@ Add "save and next card" btn
 Add folders
 Add page query paramaets ie ?card=1
 
+Add commit changes for initial commit
 Add manual validation to ```    public function showCards(Request $request, CardStartSetForm $formObj)
 
 Add quiz

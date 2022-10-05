@@ -1,20 +1,51 @@
 @extends('layouts.app')
+@push('scripts')
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/atom-one-dark.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    <script type="text/javascript" src="/js/dist/highlight-js/blade.min.js"></script>
 
+    <script>
+        hljs.highlightAll()
+        // document.body.innerHTML = document.body.innerHTML.replaceAll("&lt;pre&gt;","<pre>")
+        // document.body.innerHTML = document.body.innerHTML.replaceAll("&lt;/pre&gt;","</pre>")
+        // //<code>
+        // document.body.innerHTML = document.body.innerHTML.replaceAll("&lt;code&gt;","<code>")
+        // document.body.innerHTML = document.body.innerHTML.replaceAll("&lt;/code&gt;","</code>")
+    </script>
+@endpush
+@push('styles')
+    <style>
+        pre{
+            padding: 0px;
+        }
+
+        pre code{
+            display: none;
+            padding: none !important;
+    }
+    </style>
+@endpush
 @section('content')
 	<div class="container dark-container">
 	    <div class="row justify-content-center">
 	        <div class="col-md-12">
+
 	        	@if (count($existingCards) > 1)
 	        		<?php $cardCount=1; ?>
 					<ul id="deck">
 						@foreach( $existingCards as $existingCard )
 							<li class="flash-card" data-card-number="{!! $cardCount++ !!}" data-card-id="{!! $existingCard->id !!}">
-								<div class="side_one">
-									<div class="flash-card-content"><x-markdown>{!! $existingCard->problem !!}</x-markdown></div>
+
+
+                                <div class="side_one">
+									<div class="flash-card-content">
+                                        <x-markdown>{!! $existingCard->problem !!}</x-markdown>
+                                    </div>
 								</div>
 
 								<div class="side_two">
-									<div class="flash-card-content"><x-markdown>{!! $existingCard->solution !!}</x-markdown></div>
+									<div class="flash-card-content"><x-markdown>{!! $existingCard->getHtmlEscapedSolution() !!}</x-markdown></div>
 								</div>
 							</li>
 						@endforeach

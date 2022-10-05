@@ -16,7 +16,7 @@ class CategoryCreateForm extends FormRequest
 
         parent::__construct();
     }
-        
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +25,7 @@ class CategoryCreateForm extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|unique:card_categories,name|regex:/^[\pL0-9$ ()]+$/u',
+            'name' => 'required|min:2|unique:card_categories,name',
         ];
     }
 

@@ -4,28 +4,66 @@
 @push('scripts')
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
-    <script src="/js/dist/highlight-js/blade.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
+    <!-- Highlight.js -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/atom-one-dark.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    <script type="text/javascript" src="/js/dist/highlight-js/blade.min.js"></script>
+
+    @verbatim
 
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const easyMDE = new EasyMDE({
+                element: document.getElementById('solution-textarea'),
+                toolbar: ["bold", "italic", "heading", "|",
+                    "quote", "preview", "side-by-side", "fullscreen", "guide",
+                    {
+                        name: "custom",
+                        action: (editor) => {
+                            // Surround the selection with <pre><code> tags and place the cursor within the tags
+                            var selectedText = editor.codemirror.getSelection();
+                            var text = "<pre><code>" + selectedText + "</code></pre>";
+                            editor.codemirror.replaceSelection(text);
+                            editor.codemirror.focus();
 
-        document.addEventListener('DOMContentLoaded',function () {
-            const easyMDE = new EasyMDE({element: document.getElementById('solution-textarea'),
-                                toolbar: ["bold", "italic", "heading", "|", "quote","code","preview","side-by-side","fullscreen","guide"],
-                                renderingConfig:{
-                                    codeSyntaxHighlighting: true,
-
-                                },
-
-                            });
-
-           });
+                            // set the cursor within the <pre><code> tags
+                            var cursorPosition = editor.codemirror.getCursor();
+                            cursorPosition.ch = cursorPosition.ch - 13;
+                            editor.codemirror.setCursor(cursorPosition);
 
 
+                        },
+                        className: "fa fa-code",
+                    },
+                ],
+                renderingConfig: {
+                    codeSyntaxHighlighting: true,
+
+                },
+                spellChecker: false,
+
+            });
+
+        });
     </script>
+    @endverbatim
+@endpush
+
+@push('styles')
+    <style>
+
+    /* Hack to remove the border and background whenebver the new code block btn is selected */
+    .editor-toolbar button.active, .editor-toolbar button:hover {
+         background: inherit;
+        border-color: white !important;
+    }
+
+
+    </style>
+
 @endpush
 @section('content')
 <div class="container">

@@ -89,10 +89,10 @@ class CardController extends Controller
 
         $cardId = (is_numeric($formData['id'])) ? $formData['id'] : DB::getPdo()->lastInsertId();
 
-        ( new Tags )->saveCardTags( $cardId, $formObj->get('tags') );
+        $cardTags = ( new Tags )->saveCardTags( $cardId, $formObj->get('tags') );
 
         if (is_numeric($cardId)) {
-            return redirect()->back()->with('status', 'Flash card saved successfully.');
+            return redirect()->back()->with('status', 'Flash card saved successfully.')->withInput(['cardTags'=> $cardTags]);
         } else {
             return redirect()->back()->with('error', 'Error saving the flash card.')->withInput();
         }

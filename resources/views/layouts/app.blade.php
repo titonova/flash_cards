@@ -14,6 +14,7 @@
     @stack('scripts')
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @stack('styles')
 </head>
 <body class="d-flex flex-column">
     <div id="app">
